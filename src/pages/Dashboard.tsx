@@ -7,6 +7,12 @@ import { useAuthedUser } from "@/components/ProtectedRoute";
 // API Gateway (AWS) — the browser only talks to this URL; it holds no AWS credentials.
 const API_BASE = "https://fgtmixm75f.execute-api.us-east-1.amazonaws.com";
 
+// Sky-blue backdrop that matches the landing page hero (blue sky, soft white clouds).
+const SKY =
+  "radial-gradient(ellipse 60% 40% at 15% 8%, rgba(255,255,255,0.85), transparent 70%), " +
+  "radial-gradient(ellipse 50% 35% at 85% 18%, rgba(255,255,255,0.7), transparent 70%), " +
+  "linear-gradient(to bottom, #8fd0f7 0%, #bfe3fb 40%, #e8f6fe 100%)";
+
 type PlanName = "tokyo" | "seoul" | "london";
 
 const PLANS: {
@@ -71,14 +77,14 @@ function PlanCard({
   }
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-6">
-      <div className="flex items-start justify-between gap-3">
+    <div className="rounded-2xl border border-white/70 bg-white/60 p-6 shadow-glow backdrop-blur-sm">
+      <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
-          <h2 className="text-xl font-semibold">{plan.title}</h2>
+          <h2 className="whitespace-nowrap text-xl font-semibold">{plan.title}</h2>
           <p className="text-sm text-muted-foreground">{plan.subtitle}</p>
         </div>
         {existing && (
-          <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+          <span className="whitespace-nowrap rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">
             已訂閱 / Subscribed
           </span>
         )}
@@ -90,7 +96,7 @@ function PlanCard({
           <p className="text-2xl font-semibold">NT${existing.target_price.toLocaleString()}</p>
           <button
             onClick={() => setEditing(true)}
-            className="mt-4 rounded-full border border-border px-4 py-2 text-sm font-medium transition-colors hover:border-primary hover:text-primary"
+            className="mt-4 rounded-full border border-primary/30 bg-white/70 px-4 py-2 text-sm font-medium transition-colors hover:border-primary hover:text-primary"
           >
             更新目標價 / Update
           </button>
@@ -109,7 +115,7 @@ function PlanCard({
               inputMode="numeric"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-base"
+              className="w-full rounded-lg border border-primary/30 bg-white px-3 py-2 text-base"
             />
           </div>
           <p className="mt-2 text-xs text-muted-foreground">{plan.hint}</p>
@@ -147,13 +153,13 @@ export function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="border-b border-border/60">
+    <div className="min-h-screen text-foreground" style={{ backgroundColor: "#dff1fd", backgroundImage: SKY }}>
+      <header className="sticky top-0 z-20 border-b border-white/60 bg-white/50 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
           <span className="text-sm font-semibold tracking-tight">Flight Price Notifier</span>
           <button
             onClick={signOut}
-            className="rounded-full border border-border px-4 py-2 text-sm font-medium transition-colors hover:border-primary hover:text-primary"
+            className="rounded-full border border-primary/30 bg-white/70 px-4 py-2 text-sm font-medium transition-colors hover:border-primary hover:text-primary"
           >
             Sign out / 登出
           </button>
