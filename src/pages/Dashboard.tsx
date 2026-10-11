@@ -7,7 +7,7 @@ import { useAuthedUser } from "@/components/ProtectedRoute";
 // API Gateway (AWS) — the browser only talks to this URL; it holds no AWS credentials.
 const API_BASE = "https://fgtmixm75f.execute-api.us-east-1.amazonaws.com";
 
-type PlanName = "tokyo" | "seoul";
+type PlanName = "tokyo" | "seoul" | "london";
 
 const PLANS: {
   plan: PlanName;
@@ -18,6 +18,7 @@ const PLANS: {
 }[] = [
   { plan: "tokyo", title: "台北 ✈ 東京", subtitle: "Taipei → Tokyo", hint: "近期最低約 NT$7,000–9,300", suggested: 8000 },
   { plan: "seoul", title: "台北 ✈ 首爾", subtitle: "Taipei → Seoul", hint: "近期最低約 NT$6,000–6,400", suggested: 6500 },
+  { plan: "london", title: "台北 ✈ 倫敦", subtitle: "Taipei → London", hint: "近期最低約 NT$25,000 起", suggested: 26000 },
 ];
 
 type Subscription = { plan_name: PlanName; route: string; target_price: number };
@@ -171,7 +172,7 @@ export function Dashboard() {
           <p className="mt-4 text-sm text-destructive">讀取訂閱狀態失敗 / Could not load your subscriptions</p>
         )}
 
-        <div className="mt-8 grid gap-5 sm:grid-cols-2">
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {PLANS.map((p) => (
             <PlanCard
               key={`${p.plan}-${subs.dataUpdatedAt}`}
